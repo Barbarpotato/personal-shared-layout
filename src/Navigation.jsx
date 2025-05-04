@@ -25,24 +25,28 @@ function Navigation() {
 
     const navItems = [
         { label: 'Home', path: '/' },
-        { label: 'About', path: '/about' },
-        { label: 'Labs', path: '/labs' },
-        { label: 'Projects', path: '/projects' },
-        { label: 'Experiences', path: '/experiences' },
-        { label: 'Badges', path: '/badges' },
+        { label: 'About', path: '/About' },
+        { label: 'Labs', path: '/Labs' },
+        { label: 'Projects', path: '/Projects' },
+        { label: 'Experiences', path: '/Experiences' },
+        { label: 'Badges', path: '/Badges' },
     ];
 
     useEffect(() => {
-        setActivePath(window.location.pathname);
+        const normalized = normalizePath(window.location.pathname);
+        setActivePath(normalized);
     }, []);
 
+    const normalizePath = (path) => path.replace(/\/+$/, '').toLowerCase() || '/';
+
     const handleNav = (path) => {
-        if (path !== window.location.pathname) {
+        const normalized = normalizePath(path);
+        if (normalized !== activePath) {
             window.location.href = path;
         }
     };
 
-    const isActive = (path) => activePath.toLowerCase() === path.toLowerCase();
+    const isActive = (path) => normalizePath(path) === activePath;
 
     return (
         <>
@@ -61,7 +65,6 @@ function Navigation() {
                     </Heading>
                 </Flex>
 
-                {/* Desktop Nav */}
                 <HStack spacing={4} display={{ base: 'none', lg: 'flex' }}>
                     {navItems.map(({ label, path }) => (
                         <Button
@@ -80,9 +83,7 @@ function Navigation() {
                                 bg: isActive(path) ? secondaryColor : '#6b46c1',
                                 transform: 'scale(0.95)',
                             }}
-                            _focus={{
-                                outline: 'none',
-                            }}
+                            _focus={{ outline: 'none' }}
                             fontWeight={isActive(path) ? 'bold' : 'normal'}
                             p={4}
                         >
@@ -91,7 +92,6 @@ function Navigation() {
                     ))}
                 </HStack>
 
-                {/* Mobile Hamburger */}
                 <IconButton
                     display={{ base: 'inline-flex', lg: 'none' }}
                     icon={<GiHamburgerMenu size={24} />}
@@ -102,7 +102,6 @@ function Navigation() {
                 />
             </Flex>
 
-            {/* Mobile Drawer */}
             <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
                 <DrawerOverlay />
                 <DrawerContent bg="#1A202C" color={primaryFontColor}>
@@ -140,9 +139,7 @@ function Navigation() {
                                         bg: isActive(path) ? secondaryColor : '#6b46c1',
                                         transform: 'scale(0.95)',
                                     }}
-                                    _focus={{
-                                        outline: 'none',
-                                    }}
+                                    _focus={{ outline: 'none' }}
                                     fontWeight={isActive(path) ? 'bold' : 'normal'}
                                     p={4}
                                 >

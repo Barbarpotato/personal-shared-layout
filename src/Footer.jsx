@@ -18,6 +18,8 @@ const Footer = () => {
         { label: 'Home', href: 'https://barbarpotato.github.io/Home/' },
         { label: 'About', href: 'https://barbarpotato.github.io/About/' },
         { label: 'Labs', href: 'https://barbarpotato.github.io/Labs/' },
+        { label: 'Projects', href: 'https://barbarpotato.github.io/Projects/' },
+        { label: 'Badges', href: 'https://barbarpotato.github.io/Badges/' },
         { label: 'Resume', href: 'https://firebasestorage.googleapis.com/v0/b/personal-blog-darmajr.appspot.com/o/personal%2FProfile.pdf?alt=media&token=84919868-97bf-453d-9e9b-f282b463cc7b' },
     ];
 
