@@ -37,7 +37,7 @@ function Navigation() {
         setActivePath(normalized);
     }, []);
 
-    const normalizePath = (path) => path.replace(/\/+$/, '').toLowerCase() || '/';
+    const normalizePath = (path) => path.replace(/\/+$/, '') || '/';
 
     const handleNav = (path) => {
         const normalized = normalizePath(path);
