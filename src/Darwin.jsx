@@ -29,6 +29,7 @@ function Darwin() {
                 </button>
             ) : (
                 <Button
+                    zIndex={10}
                     ref={btnRef}
                     position="fixed"
                     right="20px"
