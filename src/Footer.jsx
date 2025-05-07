@@ -70,7 +70,6 @@ const Footer = () => {
                                     <Link
                                         key={label}
                                         href={href}
-                                        target='_blank'
                                         color="gray.400"
                                         _hover={{ color: 'pink.300' }}
                                     >

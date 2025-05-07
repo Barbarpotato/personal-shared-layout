@@ -3,7 +3,7 @@ import { MdSupportAgent } from "react-icons/md";
 import { Button, useBreakpointValue, useDisclosure } from '@chakra-ui/react';
 
 // Lazy load Drawer-related components
-const DarwinDrawer = lazy(() => import('../../components/DarwinDrawer'));
+const DarwinDrawer = lazy(() => import('./components/DarwinDrawer'));
 
 function Darwin() {
     const { isOpen, onOpen, onClose } = useDisclosure();
