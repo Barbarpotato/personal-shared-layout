@@ -53,6 +53,7 @@ function Navigation() {
                 p={5}
                 alignItems="center"
                 justifyContent="space-between"
+                zIndex={30} // higher than Hero and Collapse content
             >
                 <Flex p={2}>
                     <Heading fontSize="2xl" color={primaryFontColor}>
@@ -101,8 +102,8 @@ function Navigation() {
                 <Box
                     position="absolute" // or "fixed" for full-page overlay
                     top="72px" // adjust based on your navbar height
-                    boxShadow={"dark-lg"}
                     width={"100%"}
+                    zIndex={20}
                     bg="#292b37"
                     color={primaryFontColor}
                     display={{ lg: 'none' }}
