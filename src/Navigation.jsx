@@ -3,21 +3,18 @@ import {
     Heading,
     IconButton,
     useDisclosure,
-    Drawer,
-    DrawerBody,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
     VStack,
     HStack,
     Button,
+    Box,
+    Collapse,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
 
 function Navigation() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen, onToggle } = useDisclosure();
     const [activePath, setActivePath] = useState('/');
 
     const primaryFontColor = '#faf9ff';
@@ -49,7 +46,7 @@ function Navigation() {
     const isActive = (path) => normalizePath(path) === activePath;
 
     return (
-        <>
+        <Fragment>
             <Flex
                 backgroundColor="#292b37"
                 id="navigation"
@@ -82,7 +79,6 @@ function Navigation() {
                                 bg: isActive(path) ? secondaryColor : '#6b46c1',
                                 transform: 'scale(0.95)',
                             }}
-                            _focus={{ outline: 'none' }}
                             fontWeight={isActive(path) ? 'bold' : 'normal'}
                             p={4}
                         >
@@ -93,63 +89,50 @@ function Navigation() {
 
                 <IconButton
                     display={{ base: 'inline-flex', lg: 'none' }}
-                    icon={<GiHamburgerMenu size={24} />}
+                    icon={isOpen ? <IoMdClose size={24} /> : <GiHamburgerMenu size={24} />}
                     variant="ghost"
                     color={primaryFontColor}
-                    onClick={onOpen}
-                    aria-label="Open menu"
+                    onClick={onToggle}
+                    aria-label="Toggle menu"
                 />
             </Flex>
 
-            <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-                <DrawerOverlay />
-                <DrawerContent bg="#1A202C" color={primaryFontColor}>
-                    <DrawerHeader
-                        borderBottomWidth="1px"
-                        display="flex"
-                        justifyContent="space-between"
-                        alignItems="center"
-                    >
-                        Menu
-                        <IconButton
-                            icon={<IoMdClose size={22} />}
-                            aria-label="Close menu"
-                            variant="ghost"
-                            onClick={onClose}
-                        />
-                    </DrawerHeader>
-
-                    <DrawerBody>
-                        <VStack align="stretch" spacing={4} mt={4}>
-                            {navItems.map(({ label, path }) => (
+            <Collapse in={isOpen} animateOpacity>
+                <Box
+                    position="absolute" // or "fixed" for full-page overlay
+                    top="72px" // adjust based on your navbar height
+                    boxShadow={"dark-lg"}
+                    width={"100%"}
+                    bg="#292b37"
+                    color={primaryFontColor}
+                    display={{ lg: 'none' }}
+                    px={4}
+                    pb={4}
+                >
+                    <VStack align="stretch" spacing={1} >
+                        {navItems.map(({ label, path }) => (
+                            <Fragment key={path}>
                                 <Button
-                                    key={path}
-                                    onClick={() => handleNav(path)}
+                                    colorScheme='purple'
+                                    onClick={() => {
+                                        handleNav(path);
+                                        onToggle();
+                                    }}
                                     variant={isActive(path) ? 'solid' : 'ghost'}
-                                    colorScheme="purple"
                                     justifyContent="flex-start"
+                                    color={"white"}
                                     borderRadius="md"
-                                    _hover={{
-                                        bg: isActive(path) ? secondaryColor : '#6b46c1',
-                                        transform: 'scale(1.1)',
-                                        transition: 'transform 0.2s ease-in-out',
-                                    }}
-                                    _active={{
-                                        bg: isActive(path) ? secondaryColor : '#6b46c1',
-                                        transform: 'scale(0.95)',
-                                    }}
-                                    _focus={{ outline: 'none' }}
                                     fontWeight={isActive(path) ? 'bold' : 'normal'}
-                                    p={4}
+                                    w="full"
                                 >
                                     {label}
                                 </Button>
-                            ))}
-                        </VStack>
-                    </DrawerBody>
-                </DrawerContent>
-            </Drawer>
-        </>
+                            </Fragment>
+                        ))}
+                    </VStack>
+                </Box>
+            </Collapse>
+        </Fragment>
     );
 }
 
